@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>House Rental Website</title>
+  <link rel="stylesheet" href="index.css">
+  <link rel="icon" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1YtdyLFjpeY_8swlilCSDIeLa4f_7ym-P3g&s" width="45px">
+  <style>
+    /* --- Existing Styles with Enhancements & New Animations --- */
+    
+    .login-area{
+        width:100px;
+        height:30px;
+    }
+    
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      /* Updated background: added gradient and transition */
+      background: linear-gradient(135deg, #f4f4f4, #e0eafc);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      transition: background 0.5s ease-in-out;
+    }
+    
+    /* Updated header styles with new gradient */
+    header {
+      /* New gradient for header */
+      background: linear-gradient(45deg, #1a81bc, #08379c);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      color: #fff;
+      padding: 1rem 0;
+      text-align: center;
+      /* New animation for header appearance */
+      animation: headerFadeIn 1s ease-out;
+    }
+    
+    @keyframes headerFadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    nav ul {
+      list-style-type: none;
+      padding: 0;
+      text-align: center;
+      margin: 0;
+    }
+    
+    nav ul li {
+      display: inline-block;
+      margin: 0 1rem;
+      transition: transform 0.3s ease-in-out;
+    }
+    
+    nav ul li:hover {
+      transform: scale(1.1);
+    }
+    
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease-in-out;
+    }
+    
+    nav ul li a:hover {
+      color: #ffcc00;
+    }
+    
+    /* New style for the Post Property button in the nav */
+    .post-property-btn {
+      background-color: #ffcc00;
+      border: none;
+      color: #008bc2;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out, transform 0.3s ease;
+      /* Added a subtle pulse animation */
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    main {
+      flex: 1;
+      padding: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    section {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.8s forwards;
+    }
+    
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    h2 {
+      color: #333;
+      border-left: 4px solid #007BFF;
+      padding-left: 10px;
+      margin-bottom: 1rem;
+      /* New slide-in animation for headings */
+      animation: slideInLeft 0.8s ease-out;
+    }
+    
+    @keyframes slideInLeft {
+      from { transform: translateX(-20px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    
+    ul, ol {
+      text-align: left;
+      max-width: 600px;
+      margin: auto;
+    }
+    
+    /* Updated footer styles with new gradient */
+    footer {
+      background: linear-gradient(45deg, #043886, #0b399c);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      margin-top: auto;
+      transition: background 0.3s ease-in-out;
+    }
+    
+    footer:hover {
+      background: linear-gradient(90deg, #2a3e55, #497fa7);
+    }
+    
+    footer a {
+      color: #ccc;
+      text-decoration: none;
+      transition: color 0.3s ease-in-out;
+    }
+    
+    footer a:hover {
+      color: #ffcc00;
+    }
+    
+    .property-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: flex-start;
+      animation: fadeIn 1s ease-out;
+    }
+    
+    .property-images {
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .property-details {
+      flex: 1;
+      min-width: 300px;
+    }
+    
+    .main-image {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+    
+    .main-image:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    
+    .image-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      animation: fadeIn 1s ease-out;
+    }
+    
+    .image-stack img {
+      max-width: 150px;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
+    
+    .image-stack img:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    
+    .details {
+      font-size: 1rem;
+      color: #555;
+      line-height: 1.5;
+      text-align: left;
+    }
+    
+    .details p {
+      margin: 0.5rem 0;
+    }
+    
+    .details button {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    
+    .details button:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+    }
+    
+    .how-it-works-section {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      animation: fadeIn 0.8s forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+    .how-it-works-section h2 {
+      color: #333;
+      border-left: 4px solid #007BFF;
+      padding-left: 10px;
+      margin-bottom: 1.5rem;
+    }
+    
+    .steps-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 1rem;
+      animation: fadeIn 1s ease-out;
+    }
+    
+    .step-card {
+      background-color: #fefefe;
+      flex: 1 1 220px;
+      max-width: 250px;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+    
+    .step-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+    
+    .step-number {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #007BFF;
+      margin-bottom: 0.5rem;
+    }
+    
+    .step-card h3 {
+      margin-bottom: 0.5rem;
+      color: #007BFF;
+    }
+    
+    .step-card p {
+      color: #555;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+    
+    .hidden-phone {
+      display: none; 
+      color: #007BFF; 
+      font-weight: bold;
+      margin-left: 1rem;
+    }
+    
+    .additional-info {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #fefefe;
+      animation: slideInRight 0.8s ease-out;
+    }
+    
+    @keyframes slideInRight {
+      from { transform: translateX(30px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    
+    .additional-info h4 {
+      margin: 0.5rem 0;
+      color: #007BFF;
+    }
+    
+    .additional-info form {
+      margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .additional-info form label {
+      font-weight: bold;
+      margin-bottom: 0.2rem;
+    }
+    
+    .additional-info form input {
+      padding: 0.4rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    
+    .additional-info form button {
+      width: 100px;
+      padding: 0.4rem;
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background-color 0.3s;
+    }
+    
+    .additional-info form button:hover {
+      background-color: #0056b3;
+    }
+    
+    .perfect-home {
+      margin-top: 2rem;
+      background: linear-gradient(135deg, #e0f0ff, #ffffff);
+      position: relative;
+      border-radius: 8px;
+      padding: 2rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      animation: fadeSlideIn 1s forwards;
+      transform: translateY(30px);
+      opacity: 0;
+    }
+    
+    @keyframes fadeSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .perfect-home h2 {
+      color: #007BFF;
+      border-left: none; 
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      animation: textPop 0.8s ease forwards;
+    }
+    
+    @keyframes textPop {
+      0% {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    
+    .perfect-home p {
+      max-width: 700px;
+      margin: 0 auto 2rem auto;
+      color: #444;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      text-align: center; 
+    }
+    
+    .home-cards {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      text-align: left; 
+      animation: fadeIn 1s ease-out;
+    }
+    
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      width: 300px;
+      padding: 1rem;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      display: flex;
+      flex-direction: column;
+      align-items: center; 
+    }
+    
+    .card img {
+      width: 100%;
+      border-radius: 6px;
+      margin-bottom: 0.75rem;
+      transition: transform 0.3s ease-in-out;
+    }
+    
+    .card img:hover {
+      transform: scale(1.05);
+    }
+    
+    .card h3 {
+      margin: 0.5rem 0;
+      color: #007BFF;
+    }
+    
+    .card p {
+      color: #555;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    
+    .card button {
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+      align-self: center; 
+    }
+    
+    .card button:hover {
+      background-color: #0056b3;
+      transform: scale(1.05);
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+    
+    .how-it-works-section {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      animation: fadeIn 0.8s forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    
+    .how-it-works-section h2 {
+      color: #333;
+      border-left: 4px solid #007BFF;
+      padding-left: 10px;
+      margin-bottom: 1.5rem;
+    }
+    
+    .steps-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 1rem;
+      animation: fadeIn 1s ease-out;
+    }
+    
+    .step-card {
+      background-color: #fefefe;
+      flex: 1 1 220px; 
+      max-width: 250px;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+    
+    .step-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+    
+    .step-number {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #007BFF;
+      margin-bottom: 0.5rem;
+    }
+    
+    .step-card h3 {
+      margin-bottom: 0.5rem;
+      color: #007BFF;
+    }
+    
+    .step-card p {
+      color: #555;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+  </style>
+  
+  <script>
+    function showPhoneNumber(id) {
+      const phoneSpan = document.getElementById(id);
+      phoneSpan.style.display = 'inline'; 
+    }
+
+      function changeImage(imgElement) {
+        document.getElementById('mainImage').src = imgElement.src;
+      }
+  </script>
+</head>
+<body>
+  <header>
+    <h1>Welcome to House Rentals</h1>
+    <div class="top-bar">
+      <div class="logo-area">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1YtdyLFjpeY_8swlilCSDIeLa4f_7ym-P3g&s" width="80px" alt="Site Logo" class="logo">
+      </div>
+      <div class="search-bar">
+        <input type="search" placeholder="Search by city or locality...">
+        <button>Search</button>
+      </div>
+      <div class="contact-info">
+        <p>Call Us: +91 98765 43210</p>
+      </div>
+    </div>
+    
+    <nav>
+      <ul></ul>
+    </nav>
+    <center>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="listings.html">Listings</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="property.html"><button class="post-property-btn">Post Property</button></a></li>
+        </ul>
+      </nav>
+    </center>
+  </header>
+  
+  <main>
+    <section>
+      <h2>Explore Our Properties</h2>
+      <div class="property-container">
+        <div class="property-images">
+          <img 
+            src="https://imagecdn.99acres.com/media1/28439/13/568793441M-1739332981479.jpg" 
+            alt="Home Image" 
+            class="main-image"
+          >
+          <div class="image-stack">
+            <img src="https://imagecdn.99acres.com/media1/28436/12/568732141M-1739284417607.jpg" alt="Home Image 1">
+            <img src="https://imagecdn.99acres.com/media1/28439/12/568792011M-1739331481290.jpg" alt="Home Image 2">
+            <img src="https://imagecdn.99acres.com/media1/28439/12/568792245M-1739332745089.jpg" alt="Home Image 3">
+          </div>
+        </div>
+        
+        <div class="property-details details">
+          <h3>KK Pudur, Coimbatore</h3>
+          <p><strong>2 Bedroom House for rent</strong> in KK Pudur, Coimbatore</p>
+          <p><strong>Rent:</strong> ₹17,000/month &nbsp; | &nbsp; <strong>Deposit:</strong> ₹150,000</p>
+          <p><strong>Area:</strong> 1,350 sqft (125 sqm)</p>
+          <p><strong>Configuration:</strong> 2 BHK, 2 Baths</p>
+          <p><strong>Highlights:</strong> North Facing</p>
+          <p><strong>Description:</strong> Independent house with two bedrooms, kitchen, dining hall, and store room.</p>
+          <p><em>Posted 6 days ago &nbsp; | &nbsp; Owner listing</em></p>
+          
+          <button onclick="showPhoneNumber('phone1')">View Number</button>
+          <span id="phone1" class="hidden-phone">+91 98765 43210</span>
+
+          <div class="additional-info">
+            <h4>Amenities</h4>
+            <ul>
+              <li>Furnished: Yes</li>
+              <li>Parking: Covered</li>
+              <li>24x7 Water & Power Backup</li>
+              <li>Lift/Elevator</li>
+              <li>Security & CCTV</li>
+            </ul>
+
+            <h4>Schedule a Visit</h4>
+            <form>
+              <label>Name:</label>
+              <input type="text" placeholder="Your Name" required>
+              
+              <label>Phone:</label>
+              <input type="tel" placeholder="Your Phone" required>
+              
+              <label>Preferred Date:</label>
+              <input type="date" required>
+              
+              <a href="successmeet.html"><button type="submit">Submit</button></a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section>
+      <h2>Explore Our Properties</h2>
+      <div class="property-container">
+        <div class="property-images">
+          <img 
+            src="https://imagecdn.99acres.com/media1/23449/1/468981548M-1739972761172.jpg" 
+            alt="Home Image" 
+            class="main-image"
+          >
+          <div class="image-stack">
+            <img src="https://imagecdn.99acres.com/media1/23449/1/468981582M-1739972761026.jpg" alt="Home Image 1">
+            <img src="https://imagecdn.99acres.com/media1/23449/1/468981596M-1739972761065.jpg" alt="Home Image 2">
+            <img src="https://imagecdn.99acres.com/media1/23449/1/468981620M-1739972761047.jpg" alt="Home Image 3">
+          </div>
+        </div>
+        
+        <div class="property-details details">
+          <h3>Senthoor Elite</h3>
+          <p><strong>4 Bedroom House for rent</strong> in Seerapalayam, Coimbatore</p>
+          <p>
+            <strong>Rent:</strong> ₹25,000/month 
+            &nbsp; | &nbsp; 
+            <strong>Deposit:</strong> ₹135,000
+          </p>
+          <p><strong>Area:</strong> 1,721 sqft (160 sqm)</p>
+          <p><strong>Configuration:</strong> 4 BHK, 5 Baths</p>
+          <p><strong>Highlights:</strong> Furnished</p>
+          <p><strong>Description:</strong> Spacious rooms, separate electrical card, 
+            borewell available, good water supply.
+          </p>
+          <p><em>Posted 5 days ago &nbsp; | &nbsp; Owner listing</em></p>
+          
+          <button onclick="showPhoneNumber('phone2')">View Number</button>
+          <span id="phone2" class="hidden-phone">+91 91234 56789</span>
+
+          <div class="additional-info">
+            <h4>Amenities</h4>
+            <ul>
+              <li>Furnished: Yes</li>
+              <li>Parking: Covered</li>
+              <li>24x7 Water & Power Backup</li>
+              <li>Lift/Elevator</li>
+              <li>Security & CCTV</li>
+            </ul>
+
+            <h4>Schedule a Visit</h4>
+            <form>
+              <label>Name:</label>
+              <input type="text" placeholder="Your Name" required>
+              
+              <label>Phone:</label>
+              <input type="tel" placeholder="Your Phone" required>
+              
+              <label>Preferred Date:</label>
+              <input type="date" required>
+              
+              <a href="successmeet.html"><button type="submit">Submit</button></a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section>
+      <h2>Explore Our Properties</h2>
+      <div class="property-container">
+        <div class="property-images">
+          <img 
+            src="https://imagecdn.99acres.com/media1/28539/3/570783913M-1739947989965.jpg" 
+            alt="Home Image" 
+            class="main-image"
+          >
+          <div class="image-stack">
+            <img src="https://imagecdn.99acres.com/media1/28548/8/570968199M-1739972144902.jpg" alt="Home Image 1">
+            <img src="https://imagecdn.99acres.com/media1/23449/1/468981548M-1739972761172.jpg" alt="Home Image 2">
+            <img src="https://imagecdn.99acres.com/media1/28548/8/570968203M-1739972139269.jpg" alt="Home Image 3">
+          </div>
+        </div>
+        
+        <div class="property-details details">
+          <h3>Shri Vinayaga Garden</h3>
+          <p><strong>2 Bedroom House for rent</strong> in Thudiyalur, Coimbatore</p>
+          <p>
+            <strong>Rent:</strong> ₹15,000/month 
+            &nbsp; | &nbsp; 
+            <strong>Deposit:</strong> ₹100,000
+          </p>
+          <p><strong>Area:</strong> 1,000 sqft (93 sqm)</p>
+          <p><strong>Configuration:</strong> 2 BHK, 2 Baths</p>
+          <p><strong>Description:</strong> House/villa available for rent in 
+            malumichampatti, Coimbatore.
+          </p>
+          <p><em>Posted 5 days ago &nbsp; | &nbsp; Owner listing</em></p>
+          
+          <button onclick="showPhoneNumber('phone3')">View Number</button>
+          <span id="phone3" class="hidden-phone">+91 90000 12345</span>
+
+          <div class="additional-info">
+            <h4>Amenities</h4>
+            <ul>
+              <li>Furnished: Yes</li>
+              <li>Parking: Covered</li>
+              <li>24x7 Water & Power Backup</li>
+              <li>Lift/Elevator</li>
+              <li>Security & CCTV</li>
+            </ul>
+
+            <h4>Schedule a Visit</h4>
+            <form>
+              <label>Name:</label>
+              <input type="text" placeholder="Your Name" required>
+              
+              <label>Phone:</label>
+              <input type="tel" placeholder="Your Phone" required>
+              
+              <label>Preferred Date:</label>
+              <input type="date" required>
+              
+              <a href="successmeet.html"><button type="submit">Submit</button></a>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="perfect-home">
+      <h2>Find Your Perfect Home</h2>
+      <p>
+        Ready to make your move? Our curated selection of rental properties 
+        across Tamilnadu ensures there's something for everyone—whether you’re 
+        seeking a modern studio in the city or a spacious family home with a yard. 
+        Let us help you find the perfect fit for your lifestyle.
+      </p>
+      
+      <div class="home-cards">
+        <div class="card">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZABuUXhYCF0QqxZ8I_Mu6K8-4z67LTX_oBA&s" alt="Family Home">
+          <h3>Family Homes</h3>
+          <p>Enjoy ample space for your loved ones with backyard access and safe neighborhoods.</p>
+          <a href="listings.html"><button>Learn More</button></a>
+        </div>
+        
+        <div class="card">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ_3AvQuksweICq3IadsIZv1yQwFfSm-EKTlg&s" alt="City Apartment">
+          <h3>City Apartments</h3>
+          <p>Stay close to the buzz with modern apartments near restaurants and shopping centers.</p>
+          <a href="listings.html"><button>Learn More</button></a>
+        </div>
+        
+        <div class="card">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3aa3jr8VbQPsarGvbAIljZV_-6djvZg8-Uw&s" alt="Luxury Condo">
+          <h3>Luxury Condos</h3>
+          <p>Experience high-end living with premium amenities and breathtaking city views.</p>
+          <a href="listings.html"><button>Learn More</button></a>
+        </div>
+      </div>
+    </section>
+    
+    <section class="how-it-works-section">
+      <h2>How It Works</h2>
+      <div class="steps-container">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Browse Listings</h3>
+          <p>
+            Explore our available rental properties across Tamilnadu and 
+            find the perfect one that meets your needs.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Contact Us</h3>
+          <p>
+            Reach out to schedule a viewing or learn more about the 
+            property details and location.
+          </p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Sign the Lease</h3>
+          <p>
+            Well guide you through the paperwork to ensure a 
+            smooth, hassle-free experience.
+          </p>
+        </div>
+
+        <div class="step-number"></div>
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <h3>Move In</h3>
+          <p>
+            Pick up your keys and enjoy your new home!
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <footer>
+    <p>&copy; 2025 House Rentals | <a href="contact.html">Contact Us</a></p>
+  </footer>
+</body>
+</html>

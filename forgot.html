@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forgot Password</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: url('https://images.pexels.com/photos/186077/pexels-photo-186077.jpeg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-box {
+            background: rgba(0, 0, 0, 0.37);
+            padding: 40px;
+            width: 360px;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+            position: relative;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+        }
+
+        .background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.555);
+            backdrop-filter: blur(8px);
+        }
+
+        .logo {
+            color: rgb(0, 174, 255);
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: rgb(0, 60, 255);
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            background: #222;
+            border: 1px solid #555;
+            color: white;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: rgb(0, 140, 255);
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: darkred;
+        }
+
+        p {
+            margin-top: 10px;
+        }
+
+        p a {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        p a:hover{
+            font-size: 18px;
+        }
+    </style>
+    <script>
+        function validateForgotPassword() {
+            let email = document.getElementById("email").value;
+            let er = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+            
+            if (email === "") {
+                alert("Email must be filled");
+                return false;
+            } else if (!er.test(email)) {
+                alert("Enter a valid email address");
+                return false;
+            }
+            
+            alert("Password reset instructions have been sent to your email");
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="login-box">
+        <h1 class="logo">MAJESTIC MANOR</h1>
+        <h2>Forgot Password</h2>
+        <form id="forgotPasswordForm" onsubmit="return validateForgotPassword()">
+            <input type="email" id="email" placeholder="Enter your email" >
+            <button type="submit">Reset Password</button>
+        </form>
+        <p>Remembered your password? <a href="login.html">Sign In</a></p>
+    </div>
+</body>
+</html>

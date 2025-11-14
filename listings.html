@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Listings - House Rental Website</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f4f8; /* Updated background */
+    }
+
+    header {
+      /* Teal gradient for a modern look */
+      background: linear-gradient(45deg, #1a81bc, #083c9b);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    nav ul li {
+      display: inline-block;
+      margin: 0 15px;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .featured-listing {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 40px; 
+    }
+
+    .left-column {
+      flex: 1 1 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 300px;
+    }
+    .main-image {
+      width: 100%;
+      border-radius: 5px;
+      object-fit: cover;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .main-image:hover {
+      transform: scale(1.02);
+      opacity: 0.95;
+    }
+    .thumbnail-gallery {
+      display: flex;
+      gap: 10px;
+    }
+    .thumbnail-gallery img {
+      width: 180px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .thumbnail-gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .right-column {
+      flex: 1 1 400px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .right-column h1 {
+      margin: 0;
+      font-size: 24px;
+      color: #2c3e50; /* Dark blue-gray */
+    }
+    .info {
+      margin: 0 0 5px 0;
+      color: #7f8c8d; /* Soft gray */
+      line-height: 1.4;
+    }
+    .btn-view-more {
+      background-color: #3498db; /* Updated button color */
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 16px;
+      width: fit-content;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn-view-more:hover {
+      background-color: #2980b9;
+      transform: scale(1.05);
+    }
+
+    .hidden-phone {
+      display: none;
+      font-size: 18px;
+      margin-left: 10px;
+      color: #2c3e50;
+      font-weight: bold;
+    }
+
+    .view-btn {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .view-btn:hover {
+      background-color: #2980b9;
+      transform: scale(1.05);
+    }
+
+    .fade-in {
+      display: inline;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-5px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .additional-info form button {
+      width: 100px;
+      padding: 0.4rem;
+      background-color: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background-color 0.3s;
+    }
+    
+    .additional-info form button:hover {
+      background-color: #2980b9;
+    }
+    
+    .schedule-visit {
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 10px;
+      background-color: #ecf0f1;
+    }
+    .schedule-visit h3 {
+      margin-top: 0;
+      color: #2c3e50;
+    }
+    .schedule-visit label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #7f8c8d;
+    }
+    .schedule-visit input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .btn-submit {
+      background-color: #e67e22; /* Vibrant orange */
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 15px;
+      cursor: pointer;
+      margin-top: 15px;
+      font-size: 16px;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn-submit:hover {
+      background-color: #d35400;
+    }
+
+    .listings-heading {
+      font-size: 22px;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    .house-listing {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .house-images {
+      flex: 1 1 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 300px;
+    }
+    .house-images img {
+      width: 100%;
+      border-radius: 5px;
+      object-fit: cover;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .house-images img:hover {
+      transform: scale(1.02);
+      opacity: 0.95;
+    }
+    .house-thumbs {
+      display: flex;
+      gap: 10px;
+    }
+    .house-thumbs img {
+      width: 180px;
+      height: 60px;
+      border-radius: 5px;
+      object-fit: cover;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .house-thumbs img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .house-details {
+      flex: 1 1 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .house-details h3 {
+      margin: 0;
+      font-size: 20px;
+      color: #2c3e50;
+    }
+    .house-details p {
+      margin: 0 0 5px 0;
+      color: #7f8c8d;
+    }
+    @media (max-width: 768px) {
+      .featured-listing {
+        flex-direction: column;
+      }
+      .house-listing {
+        flex-direction: column;
+      }
+      .left-column,
+      .right-column,
+      .house-images,
+      .house-details {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Our Listings</h1>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#">Listings</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <section class="featured-listing">
+      <div class="left-column">
+        <img
+          id="mainImage"
+          class="main-image"
+          src="https://imagecdn.99acres.com/media1/28510/16/570216747M-1739777288297.jpg"
+          alt="Main House Image"
+        />
+        <div class="thumbnail-gallery">
+          <img
+            src="https://imagecdn.99acres.com/media1/28510/16/570216719M-1739777604637.jpg"
+            alt="Thumbnail 1"
+            onclick="changeImage(this.src)"
+          />
+          <img
+            src="https://imagecdn.99acres.com/media1/28510/16/570216733M-1739777288744.jpg"
+            alt="Thumbnail 2"
+            onclick="changeImage(this.src)"
+          />
+          <img
+            src="https://imagecdn.99acres.com/media1/28510/16/570216717M-1739777294520.jpg"
+            alt="Thumbnail 3"
+            onclick="changeImage(this.src)"
+          />
+        </div>
+      </div>
+
+      <div class="right-column">
+        <h1>KK Pudur, Coimbatore</h1>
+        <p class="info">2 Bedroom House for rent in KK Pudur, Coimbatore</p>
+        <p class="info">Rent: ₹17,000/month | Deposit: ₹150,000</p>
+        <p class="info">Area: 1,350 sqft (125 sqm)</p>
+        <p class="info">Configuration: 2 BHK, 2 Baths</p>
+        <p class="info">Highlights: North Facing</p>
+        <p class="info">
+          Description: Independent house with two bedrooms, kitchen, dining hall, and store room. Posted 6 days ago.
+        </p>
+        <button class="view-btn" onclick="showPhoneNumber('phone1')">View Number</button>
+        <span id="phone1" class="hidden-phone">+91 98765 43210</span>
+
+        <div class="amenities">
+          <h3>Amenities</h3>
+          <ul>
+            <li>Furnished: Yes</li>
+            <li>Parking: Covered</li>
+            <li>24x7 Water &amp; Power Backup</li>
+            <li>Lift/Elevator</li>
+            <li>Security &amp; CCTV</li>
+          </ul>
+        </div>
+
+        <div class="schedule-visit">
+          <h3>Schedule a Visit</h3>
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your Name" />
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" placeholder="Your Phone Number" />
+          <label for="date">Date</label>
+          <input type="date" id="date" />
+          <button class="btn-submit" onclick="submitForm()">Submit</button>
+        </div>
+      </div>
+    </section>
+
+    <h2 class="listings-heading">More Listings in Coimbatore</h2>
+    <div class="house-listing">
+      <div class="house-images">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStjxvcVmzLy0MOTiCyHmsVxugGKPI8iTNXtg&s"
+          alt="Luxury Villa"
+        />
+        <div class="house-thumbs">
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKifoAR1k5dCSIpAu0-RT4MvWYhu7CiOJimw&s"
+            alt="Luxury Villa 1"
+          />
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJ4xCybRjiWCXMVmMZsh_09pXrL6jlu_pvrQ&s"
+            alt="Luxury Villa 2"
+          />
+          <img
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgmnCEwj6oCAnSNsdj0TLxQzhHZvHoqIbB-g&s"
+            alt="Luxury Villa 3"
+          />
+        </div>
+      </div>
+      <div class="house-details">
+        <h3>Luxury Villa</h3>
+        <p>Location: Race Course, Coimbatore</p>
+        <p>Price: ₹50,000/month</p>
+        <p>Configuration: 4 BHK</p>
+        <p>Highlights: Spacious garden, modern interiors</p>
+        <button class="view-btn" onclick="showPhoneNumber('phone1')">View Number</button>
+        <span id="phone1" class="hidden-phone">+91 93441 22187</span>
+
+        <div class="amenities">
+          <h3>Amenities</h3>
+          <ul>
+            <li>Furnished: Yes</li>
+            <li>Parking: Covered</li>
+            <li>24x7 Water &amp; Power Backup</li>
+            <li>Lift/Elevator</li>
+            <li>Security &amp; CCTV</li>
+          </ul>
+        </div>
+
+        <div class="schedule-visit">
+          <h3>Schedule a Visit</h3>
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your Name" />
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" placeholder="Your Phone Number" />
+          <label for="date">Date</label>
+          <input type="date" id="date" />
+          <button class="btn-submit" onclick="submitForm()">Submit</button>
+        </div>
+      </div>
+      
+    </div>
+    
+    <div class="house-listing">
+      <div class="house-images">
+        <img
+          src="https://imagecdn.99acres.com/media1/28534/15/570695979M-1739897866731.jpg"
+          alt="Spacious 3BHK Apartment"
+        />
+        <div class="house-thumbs">
+          <img
+            src="https://imagecdn.99acres.com/media1/28534/15/570695971M-1739897843573.jpg"
+            alt="3BHK Apt 1"
+          />
+          <img
+            src="https://imagecdn.99acres.com/media1/28534/15/570695975M-1739897834535.jpg"
+            alt="3BHK Apt 2"
+          />
+          <img
+            src="https://imagecdn.99acres.com/media1/28534/15/570695977M-1739897871435.jpg"
+            alt="3BHK Apt 3"
+          />
+        </div>
+      </div>
+      <div class="house-details">
+        <h3>Spacious 3BHK Apartment</h3>
+        <p>Location: Saibaba Colony, Coimbatore</p>
+        <p>Price: ₹25,000/month</p>
+        <p>Configuration: 3 BHK</p>
+        <p>Highlights: Reserved parking, elevator</p>
+        <button class="view-btn" onclick="showPhoneNumber('phone1')">View Number</button>
+        <span id="phone1" class="hidden-phone">+91 8098718725</span>
+
+        <div class="amenities">
+          <h3>Amenities</h3>
+          <ul>
+            <li>Furnished: Yes</li>
+            <li>Parking: Covered</li>
+            <li>24x7 Water &amp; Power Backup</li>
+            <li>Lift/Elevator</li>
+            <li>Security &amp; CCTV</li>
+          </ul>
+        </div>
+
+        <div class="schedule-visit">
+          <h3>Schedule a Visit</h3>
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your Name" />
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" placeholder="Your Phone Number" />
+          <label for="date">Date</label>
+          <input type="date" id="date" />
+          <button class="btn-submit" onclick="submitForm()">Submit</button>
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="house-listing">
+      <div class="house-images">
+        <img
+          src="https://imagecdn.99acres.com/media1/28597/19/571959685M-1740295275995.jpg"
+          alt="Modern 2BHK Flat"
+        />
+        <div class="house-thumbs">
+          <img
+            src="https://imagecdn.99acres.com/media1/28597/19/571959685M-1740295275995.jpg"
+            alt="Flat 1"
+          />
+          <img
+            src="https://imagecdn.99acres.com/media1/28602/9/572049371M-1740316749560.jpg"
+            alt="Flat 2"
+          />
+          <img
+            src="https://imagecdn.99acres.com/media1/28598/18/571978021M-1740299286713.jpg"
+            alt="Flat 3"
+          />
+        </div>
+      </div>
+      <div class="house-details">
+        <h3>Modern 2BHK Flat</h3>
+        <p>Location: Gandhipuram, Coimbatore</p>
+        <p>Price: ₹18,000/month</p>
+        <p>Configuration: 2 BHK</p>
+        <p>Highlights: Close to shopping centers</p>
+        <button class="view-btn" onclick="showPhoneNumber('phone1')">View Number</button>
+        <span id="phone1" class="hidden-phone">+91 9626293451</span>
+
+        <div class="amenities">
+          <h3>Amenities</h3>
+          <ul>
+            <li>Furnished: Yes</li>
+            <li>Parking: Covered</li>
+            <li>24x7 Water &amp; Power Backup</li>
+            <li>Lift/Elevator</li>
+            <li>Security &amp; CCTV</li>
+          </ul>
+        </div>
+
+        <div class="schedule-visit">
+          <h3>Schedule a Visit</h3>
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your Name" />
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" placeholder="Your Phone Number" />
+          <label for="date">Date</label>
+          <input type="date" id="date" />
+          <button class="btn-submit" onclick="submitForm()">Submit</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="house-listing">
+      <div class="house-images">
+        <img
+          src="https://imagecdn.99acres.com/media1/28379/10/567590399M-1738917705989.jpg"
+          alt="Budget 1BHK Apartment"
+        />
+        <div class="house-thumbs">
+          <img
+            src="https://imagecdn.99acres.com/media1/28379/10/567590403M-1738917717174.jpg"
+            alt="1BHK 1"
+          />
+          <img
+            src="https://imagecdn.99acres.com/media1/28379/10/567590409M-1738917711764.jpg"
+            alt="1BHK 2"
+          />
+          <img
+            src="https://imagecdn.99acres.com/media1/28217/16/564356385M-1737820444821.jpg"
+            alt="1BHK 3"
+          />
+        </div>
+      </div>
+      <div class="house-details">
+        <h3>Budget 1BHK Apartment</h3>
+        <p>Location: Peelamedu, Coimbatore</p>
+        <p>Price: ₹12,000/month</p>
+        <p>Configuration: 1 BHK</p>
+        <p>Highlights: Affordable, near public transport</p>
+        <button class="view-btn" onclick="showPhoneNumber('phone1')">View Number</button>
+        <span id="phone1" class="hidden-phone">+91 80159 54167</span>
+
+        <div class="amenities">
+          <h3>Amenities</h3>
+          <ul>
+            <li>Furnished: Yes</li>
+            <li>Parking: Covered</li>
+            <li>24x7 Water &amp; Power Backup</li>
+            <li>Lift/Elevator</li>
+            <li>Security &amp; CCTV</li>
+          </ul>
+        </div>
+
+        <div class="schedule-visit">
+          <h3>Schedule a Visit</h3>
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your Name" />
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" placeholder="Your Phone Number" />
+          <label for="date">Date</label>
+          <input type="date" id="date" />
+          <button class="btn-submit" onclick="submitForm()">Submit</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="house-listing">
+      <div class="house-images">
+        <img
+          src="https://imagecdn.99acres.com/media1/28332/16/566656231M-1738649641069.jpg"
+          alt="Independent House"
+        />
+        <div class="house-thumbs">
+          <img
+            src="https://imagecdn.99acres.com/media1/28332/16/566656231M-1738649641069.jpg"
+            alt="House 1"
+          />
+          <img
+            src="https://imagecdn.99acres.com/media1/28266/13/565333151M-1738160282033.jpg"
+            alt="House 2"
+          />
+          <img
+            src="https://imagecdn.99acres.com/media1/28266/13/565333151M-1738160282033.jpg"
+            alt="House 3"
+          />
+        </div>
+      </div>
+      <div class="house-details">
+        <h3>Independent House</h3>
+        <p>Location: R.S. Puram, Coimbatore</p>
+        <p>Price: ₹30,000/month</p>
+        <p>Configuration: 3 BHK</p>
+        <p>Highlights: Private yard, gated compound</p>
+        <button class="view-btn" onclick="showPhoneNumber('phone1')">View Number</button>
+        <span id="phone1" class="hidden-phone">+91 98765 43210</span>
+
+        <div class="amenities">
+          <h3>Amenities</h3>
+          <ul>
+            <li>Furnished: Yes</li>
+            <li>Parking: Covered</li>
+            <li>24x7 Water &amp; Power Backup</li>
+            <li>Lift/Elevator</li>
+            <li>Security &amp; CCTV</li>
+          </ul>
+        </div>
+
+        <div class="schedule-visit">
+          <h3>Schedule a Visit</h3>
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your Name" />
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" placeholder="Your Phone Number" />
+          <label for="date">Date</label>
+          <input type="date" id="date" />
+          <button class="btn-submit" onclick="submitForm()">Submit</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="house-listing">
+      <div class="house-images">
+        <img
+          src="https://imagecdn.99acres.com/media1/28402/12/568052161M-1739077322079.jpg"
+          alt="Fully Furnished Studio"
+        />
+        <div class="house-thumbs">
+          <img
+            src="https://imagecdn.99acres.com/media1/28402/12/568052007M-1739077263085.jpg"
+            alt="Studio 1"
+          />
+          <img
+            src="https://imagecdn.99acres.com/media1/28402/12/568052007M-1739077263085.jpg"
+            alt="Studio 2"
+          />
+          <img
+            src="https://imagecdn.99acres.com/media1/28402/12/568052117M-1739089835315.jpg"
+            alt="Studio 3"
+          />
+        </div>
+      </div>
+      <div class="house-details">
+        <h3>Fully Furnished Studio</h3>
+        <p>Location: Avinashi Road, Coimbatore</p>
+        <p>Price: ₹15,000/month</p>
+        <p>Configuration: Studio</p>
+        <p>Highlights: Ready to move, includes appliances</p>
+        <button class="view-btn" onclick="showPhoneNumber('phone1')">View Number</button>
+        <span id="phone1" class="hidden-phone">+91 90345 67438</span>
+        <div class="amenities">
+          <h3>Amenities</h3>
+          <ul>
+            <li>Furnished: Yes</li>
+            <li>Parking: Covered</li>
+            <li>24x7 Water &amp; Power Backup</li>
+            <li>Lift/Elevator</li>
+            <li>Security &amp; CCTV</li>
+          </ul>
+        </div>
+
+        <div class="schedule-visit">
+          <h3>Schedule a Visit</h3>
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your Name" />
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" placeholder="Your Phone Number" />
+          <label for="date">Date</label>
+          <input type="date" id="date" />
+          <button class="btn-submit" onclick="submitForm()">Submit</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="house-listing">
+      <div class="house-images">
+        <img
+          src="https://imagecdn.99acres.com/media1/27586/11/551731341M-1736176667063.jpg"
+          alt="4BHK Bungalow"
+        />
+        <div class="house-thumbs">
+          <img
+            src="https://imagecdn.99acres.com/media1/27586/11/551731341M-1736176667063.jpg"
+            alt="Bungalow 1"
+          />
+          <img
+            src="https://imagecdn.99acres.com/media1/28564/19/571299555M-1740060787511.jpg"
+            alt="Bungalow 2"
+          />
+          <img
+            src="https://imagecdn.99acres.com/media1/28564/19/571299555M-1740060787511.jpg"
+            alt="Bungalow 3"
+          />
+        </div>
+      </div>
+      <div class="house-details">
+        <h3>4BHK Bungalow</h3>
+        <p>Location: Vadavalli, Coimbatore</p>
+        <p>Price: ₹45,000/month</p>
+        <p>Configuration: 4 BHK</p>
+        <p>Highlights: Large terrace, parking space</p>
+        <button class="view-btn" onclick="showPhoneNumber('phone1')">View Number</button>
+        <span id="phone1" class="hidden-phone">+91 90564 32467</span>
+
+        <div class="amenities">
+          <h3>Amenities</h3>
+          <ul>
+            <li>Furnished: Yes</li>
+            <li>Parking: Covered</li>
+            <li>24x7 Water &amp; Power Backup</li>
+            <li>Lift/Elevator</li>
+            <li>Security &amp; CCTV</li>
+          </ul>
+        </div>
+
+        <div class="schedule-visit">
+          <h3>Schedule a Visit</h3>
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your Name" />
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" placeholder="Your Phone Number" />
+          <label for="date">Date</label>
+          <input type="date" id="date" />
+          <button class="btn-submit" onclick="submitForm()">Submit</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="house-listing">
+      <div class="house-images">
+        <img
+          src="https://imagecdn.99acres.com/media1/28570/16/571416067M-1740122922180.jpg"
+          alt="2BHK Gated Community"
+        />
+        <div class="house-thumbs">
+          <img
+            src="https://imagecdn.99acres.com/media1/28586/12/571732329M-1740209851505.jpg"
+            alt="Community 1"
+          />
+          <img
+            src="https://imagecdn.99acres.com/media1/28570/15/571415923M-1740122920107.jpg"
+            alt="Community 2"
+          />
+          <img
+            src="https://imagecdn.99acres.com/media1/28570/16/571416067M-1740122922180.jpg"
+            alt="Community 3"
+          />
+        </div>
+      </div>
+      <div class="house-details">
+        <h3>2BHK Gated Community</h3>
+        <p>Location: Singanallur, Coimbatore</p>
+        <p>Price: ₹20,000/month</p>
+        <p>Configuration: 2 BHK</p>
+        <p>Highlights: Security, clubhouse facilities</p>
+        <button class="view-btn" onclick="showPhoneNumber('phone1')">View Number</button>
+        <span id="phone1" class="hidden-phone">+91 98765 78645</span>
+
+        <div class="amenities">
+          <h3>Amenities</h3>
+          <ul>
+            <li>Furnished: Yes</li>
+            <li>Parking: Covered</li>
+            <li>24x7 Water &amp; Power Backup</li>
+            <li>Lift/Elevator</li>
+            <li>Security &amp; CCTV</li>
+          </ul>
+        </div>
+
+        <div class="schedule-visit">
+          <h3>Schedule a Visit</h3>
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your Name" />
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" placeholder="Your Phone Number" />
+          <label for="date">Date</label>
+          <input type="date" id="date" />
+          <button class="btn-submit" onclick="submitForm()">Submit</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="house-listing">
+      <div class="house-images">
+        <img
+          src="https://imagecdn.99acres.com/media1/22858/10/457170248M-1737521221141.jpg"
+          alt="1RK Studio Apartment"
+        />
+        <div class="house-thumbs">
+          <img
+            src="https://imagecdn.99acres.com/media1/22858/10/457170326M-1737521221137.jpg"
+            alt="Studio 1"
+          />
+          <img
+            src="https://imagecdn.99acres.com/media1/22858/10/457170298M-1737521220952.jpg"
+            alt="Studio 2"
+          />
+          <img
+            src="https://imagecdn.99acres.com/media1/22858/10/457170298M-1737521220952.jpg"
+            alt="Studio 3"
+          />
+        </div>
+      </div>
+      <div class="house-details">
+        <h3>1RK Studio Apartment</h3>
+        <p>Location: Ukkadam, Coimbatore</p>
+        <p>Price: ₹10,000/month</p>
+        <p>Configuration: 1RK (Room + Kitchen)</p>
+        <p>Highlights: Budget-friendly, easy commute</p>
+        <button class="view-btn" onclick="showPhoneNumber('phone1')">View Number</button>
+        <span id="phone1" class="hidden-phone">+91 98765 43210</span>
+
+        <div class="amenities">
+          <h3>Amenities</h3>
+          <ul>
+            <li>Furnished: Yes</li>
+            <li>Parking: Covered</li>
+            <li>24x7 Water &amp; Power Backup</li>
+            <li>Lift/Elevator</li>
+            <li>Security &amp; CCTV</li>
+          </ul>
+        </div>
+
+        <div class="schedule-visit">
+          <h3>Schedule a Visit</h3>
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your Name" />
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" placeholder="Your Phone Number" />
+          <label for="date">Date</label>
+          <input type="date" id="date" />
+          <button class="btn-submit" onclick="submitForm()">Submit</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="house-listing">
+      <div class="house-images">
+        <img
+          src="https://imagecdn.99acres.com/media1/28311/0/566220397M-1738480508901.jpg"
+          alt="3BHK Duplex House"
+        />
+        <div class="house-thumbs">
+          <img
+            src="https://imagecdn.99acres.com/media1/28311/0/566220433M-1738480506486.jpg"
+            alt="Duplex 1"
+          />
+          <img
+            src="https://imagecdn.99acres.com/media1/28311/0/566220419M-1738480519758.jpg"
+            alt="Duplex 2"
+          />
+          <img
+            src="https://imagecdn.99acres.com/media1/28311/0/566220399M-1738480504600.jpg"
+            alt="Duplex 3"
+          />
+        </div>
+      </div>
+      <div class="house-details">
+        <h3>3BHK Duplex House</h3>
+        <p>Location: Kuniamuthur, Coimbatore</p>
+        <p>Price: ₹28,000/month</p>
+        <p>Configuration: 3 BHK</p>
+        <p>Highlights: Two-story layout, covered parking</p>
+        <button class="view-btn" onclick="showPhoneNumber('phone1')">View Number</button>
+        <span id="phone1" class="hidden-phone">+91 897645 67345</span>
+
+        <div class="amenities">
+          <h3>Amenities</h3>
+          <ul>
+            <li>Furnished: Yes</li>
+            <li>Parking: Covered</li>
+            <li>24x7 Water &amp; Power Backup</li>
+            <li>Lift/Elevator</li>
+            <li>Security &amp; CCTV</li>
+          </ul>
+        </div>
+
+        <div class="schedule-visit">
+          <h3>Schedule a Visit</h3>
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your Name" />
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" placeholder="Your Phone Number" />
+          <label for="date">Date</label>
+          <input type="date" id="date" />
+          <button class="btn-submit" onclick="submitForm()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 House Rentals</p>
+  </footer>
+
+  <script>
+    function changeImage(src) {
+      document.getElementById('mainImage').src = src;
+    }
+
+    function submitForm() {
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const date = document.getElementById('date').value;
+
+      if (!name || !phone || !date) {
+        alert('Please fill out all fields before submitting.');
+        return;
+      }
+
+      alert(
+        'Thank you, ' + name +
+        '! We will contact you at ' + phone +
+        ' to schedule a visit on ' + date + '.'
+      );
+    }
+    function showPhoneNumber(id) {
+      const phoneSpan = document.getElementById(id);
+      phoneSpan.style.display = 'inline'; 
+    }
+  </script>
+</body>
+</html>

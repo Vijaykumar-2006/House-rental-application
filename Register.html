@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: url('https://images.pexels.com/photos/186077/pexels-photo-186077.jpeg') no-repeat center center/cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-box {
+            background: rgba(0, 0, 0, 0.37);
+            padding: 40px;
+            width: 360px;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+            position: relative;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.363);
+            padding: 30px;
+            width: 350px;
+            border-radius: 8px;
+            color: white;
+            text-align: center;
+        }
+
+        .logo {
+            color: rgb(0, 174, 255);
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: rgb(0, 60, 255);
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            background: #222;
+            border: 1px solid #555;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.555);
+            backdrop-filter: blur(8px);
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: rgb(0, 140, 255);
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: darkred;
+        }
+
+        p {
+            margin-top: 10px;
+        }
+
+        p a {
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        p a:hover{
+            font-size:18px;
+        }
+
+    </style>
+    <script>
+        function validateSignup() {
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let phone = document.getElementById("phone").value;
+    let password = document.getElementById("password").value;
+    let cpassword = document.getElementById("confirmPassword").value;
+
+    let er = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/; 
+    let pr = /^[0-9]{10}$/;
+
+    if (name === "") {
+        alert("Username must be filled");
+        return false;
+    }
+
+    if (email === "") {
+        alert("Email must be filled");
+        return false;
+    } else if (!er.test(email)) {
+        alert("Email must be in correct format");
+        return false;
+    }
+
+    if (phone === "") {  
+        alert("Phone number must be filled");
+        return false;
+    } else if (!pr.test(phone)) {
+        alert("Phone number must be exactly 10 digits");
+        return false;
+    }
+
+    if (password === "") {
+        alert("Password must be filled");
+        return false;
+    }
+
+    if (cpassword === "") {
+        alert("Confirm Password must be filled");
+        return false;
+    }
+
+    if (password !== cpassword) { 
+        alert("Passwords do not match");
+        return false;
+    }
+
+    return true;
+}
+
+    </script>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="login-box">
+        <h1 class="logo">MAJESTIC MANOR</h1>
+        <h2>Sign Up</h2>
+        <form id="signupForm" onsubmit="return validateSignup()">
+            <input type="text" id="name" placeholder="Full Name" name="fname">
+            <input type="email" id="email" placeholder="Email" name="mail">
+            <input type="text" id="phone" placeholder="Phone Number" name="phno">
+            <input type="password" id="password" placeholder="Password" name="pass">
+            <input type="password" id="confirmPassword" placeholder="Confirm Password" name="cpass">
+            <input type="submit" >Sign Up
+        </form>
+        <p>Already have an account? <a href="login.html">Sign In</a></p>
+    </div>
+
+
+</body>
+</html>

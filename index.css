@@ -1,0 +1,65 @@
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+  }
+  
+  .logo-area .logo {
+    height: 50px;
+  }
+  
+  .tagline {
+    text-align: center;
+  }
+  
+  .subtitle {
+    font-size: 0.9rem;
+    color: #ccc;
+    margin-top: -0.5rem;
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-bar input {
+    padding: 0.4rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 0.5rem;
+  }
+  
+  .search-bar button {
+    background-color: hsl(211, 100%, 50%);
+    color: #fff;
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .search-bar button:hover {
+    background-color: #0056b3;
+  }
+  
+  .contact-info p {
+    margin: 0;
+    font-weight: bold;
+  }
+  
+  .post-property-btn {
+    background-color: #28a745;
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    margin-left: 1rem;
+  }
+  
+  .post-property-btn:hover {
+    background-color: #218838;
+  }
+  

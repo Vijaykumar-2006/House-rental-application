@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width , initial-scale=1.0">
+        <title>Testing page</title>
+        <script>
+            function validate()
+            {
+                let name=document.getElementById('name').value;
+                let pass=document.getElementById('pass').value;
+                let age=document.getElementById('age').value;
+                let email=document.getElementById('email').value;
+                let check=document.getElementById('check');
+
+                let np=/^[a-zA-Z]+$/;
+                let pp=/^[a-z0-9@._]{8}$/;
+                let ep=/^[a-zA-z0-9.-_]+@[a-z]+.[a-z]{2,4}$/;
+
+                if(name==="")
+            {
+                alert("Name must be filled out");
+                return false;
+            }
+            else if(!np.test(name))
+            {
+                alert("Name must contain alphabets only");
+                return false;
+            }
+
+            if(pass==="")
+            {
+                alert("Password must be filled out");
+                return false;
+            }
+            else if(!pp.test(pass))
+            {
+                alert("Password should be of length 8 and can include ._@");
+                return false;
+            }
+
+            if(age<18)
+            {
+                alert("Age must be greater or equal to 18");
+                return false;
+            }
+
+            if(email==="")
+            {
+                alert("Email must be filled out");
+                return false;
+            }
+            else if(!ep.test(email))
+            {
+                alert("Email should be filled in correct order");
+                return false;
+            }
+
+            if(!check.checked)
+            {
+                alert("Must accept the terms and conditions");
+                return false;
+            }
+            return true;
+            }
+        </script>
+    </head>
+    <body>
+    <center>
+    <form method="post" action="inserting.jsp" onsubmit="return validate()">
+        <div>
+            <label for="name">name :</label>
+            <input type="text" name="name"  size="20" id="name" autofocus>
+        </div>
+        <br>
+        <div>
+        <label for="password">password : </label>
+        <input type="password" name="password" size="20" id="pass">
+        </div>
+        <br>
+        <div>
+            <label for="age">age</label>
+            <input type="number" name="age" id="age" min="0"  max="90" value="0" id="age">
+        </div>
+        <br>
+        <div>
+            <label for="suggestion">Suggestion</label>
+            <textarea name="suggestion" rows="5" columns="30" wrap></textarea>
+        </div>
+        <br>
+        <label for="mail">email</label>
+        <input type="email" name="email" id="email" id="email">
+        <br>
+        <br>
+        <label for="gender">gender</label>
+        <input type="radio" name="gender" value="male" checked>Male
+        <input type="radio" name="gender" value="female">Female
+        <br>
+        <br>
+        <label for="check"></label>
+        <input type="checkbox" name="check" id="check" >I accept the terms and conditions
+        <br>
+        <br>
+        <label for="dropdown">City</label>
+        <select name="dropdown">
+            <option value="coimbatore" name="city" selected>coimbatore</option>
+            <option value="namakkal" name="city">Namakkal</option>
+        </select>
+        <br>
+        <br>
+        <input type="submit" id="submit">  submit
+
+    </form>
+    </center>
+   </body>
+</html>
